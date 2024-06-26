@@ -64,8 +64,8 @@ def remove_due_orders(orders_to_be_delivered: List[Order], due_orders:List[Order
 # allocate the orders which are due to the same destination to the same vehicle
 def initial_orders_to_vehicle(orders:List[Order], vehicle_id: int) -> List[Vehicle]:
     allocated_vehicles = []
-    vehicle_capacity = 20
-    speed = 1
+    vehicle_capacity = 30
+
     # calculate the number of vehicles needed to deliver the orders
     num_vehicles_needed = math.ceil(sum([order.demand for order in orders]) / vehicle_capacity)
     print(f"")
@@ -121,7 +121,7 @@ def vehicles_aggregate(vehicles: List[Vehicle], depot: Tuple[float, float],curre
         aggregatation_flag = False
         for i in range(len(vehicles)):
             for j in range(i+1, len(vehicles)):
-                #print(f"i: {i}, j: {j}")
+                print(f"aggregate vehicle {vehicles[i].vehicle_id} and vehicle {vehicles[j].vehicle_id}")
                 if check_aggregate_capacity(vehicles[i], vehicles[j]) and check_aggregate_time(vehicles[i], vehicles[j], depot, current_time):
                     vehicles[i].orders.extend(vehicles[j].orders)
                     vehicles[i].load += vehicles[j].load
@@ -153,10 +153,10 @@ def check_aggregate_time(vehicle1: Vehicle, vehicle2: Vehicle, depot: Tuple[floa
     orders.extend(vehicle1.orders)
     orders.extend(vehicle2.orders)
     if check_path(orders, depot, vehicle1,start_time, route=None):
-        #print("The aggregated vehicle can deliver the orders in time.")
+        print("The aggregated vehicle can deliver the orders in time.")
         return True
     else:
-        #print("The aggregated vehicle cannot deliver the orders in time.")
+        print("The aggregated vehicle cannot deliver the orders in time.")
         return False
 
 
@@ -212,9 +212,25 @@ def check_path(vehicle_orders: List[Order], depot: Tuple[float, float], vehicle:
     for i in range(len(path_orders)):
         if real_window_ends[i] > path_orders[i].time_window[1]:
             return False
-        
+    
     vehicle_route = []
     for path_order in path_orders:
         vehicle_route.append(path_order.destination)
-    vehicle.route = vehicle_route
-    return True
+    real_mileage = calculate_path_mileage(vehicle_route, depot)
+    if  real_mileage <= vehicle.max_mileage:
+        vehicle.real_mileage = real_mileage
+        vehicle.route = vehicle_route
+        return True
+    else:
+        print("out of the max mileage")
+        return False
+
+def calculate_path_mileage(vehicle_path:List[DropPoint], depot: Tuple[float, float]) -> float:
+    vehicle_real_mileage = 0
+    for i in range(len(vehicle_path)):
+        if i == 0:
+            vehicle_real_mileage += calculate_distance(depot, [vehicle_path[i].x, vehicle_path[i].y])
+        else:
+            vehicle_real_mileage += calculate_distance([vehicle_path[i-1].x,vehicle_path[i-1].y], [vehicle_path[i].x, vehicle_path[i].y])
+    vehicle_real_mileage += calculate_distance([vehicle_path[-1].x,vehicle_path[-1].y], depot)
+    return vehicle_real_mileage

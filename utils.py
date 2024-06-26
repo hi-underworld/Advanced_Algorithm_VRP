@@ -10,6 +10,8 @@ class Vehicle:
         self.load = 0
         self.speed = speed  # 1 unit distance per minute
         self.orders = []
+        self.real_mileage = 0
+        self.max_mileage = 20
         
 
 class DropPoint:
