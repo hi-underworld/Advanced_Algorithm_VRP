@@ -5,20 +5,21 @@ import matplotlib.pyplot as plt
 def main():
     #run the simulator with different k values and save the results into a json file
     #set the m as the reconducting times
-    m = 10
+    k = 10
+    n = 20
     results = {}
-    for i in range (1, 10):
-        results[str(i)] = {}
-        for j in range(m):
+    for i in range (1, k + 1):
+        results[str(i)] = []
+        for j in range(n):
             print(f"Simulating with k = {i} for the {j+1}th time...")
-            results[str(i)][str(j)] = simulator(k=i)
+            results[str(i)].append(simulator(k=i))
     
     with open('results.json', 'w') as f:
         json.dump(results, f)
     
     average_results = {}
-    for i in range(1, 10):
-        average_results[str(i)] = sum(results[str(i)].values())/m
+    for i in range(1, k + 1):
+        average_results[str(i)] = sum(results[str(i)])/len(results[str(i)])
 
     #plot the results and save the plot into a pdf file
     plt.plot(average_results.keys(), average_results.values())

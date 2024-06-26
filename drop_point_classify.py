@@ -22,7 +22,7 @@ def find_closest_depot(drop_points: List[DropPoint], depots: List[DePot], thereh
             for depot_id, count in depot_count.items():
                 if count == max_count:
                     drop_point.depot = depots[depot_id-1]
-                    print(f"Drop point {drop_point.id} is closest to depot {depot_id}.")
+                    #print(f"Drop point {drop_point.id} is closest to depot {depot_id}.")
                     break
         else:
             # 如果当前drop point半径therehold范围内没有drop point对应的depot,则将当前drop point的depot设置为距离当前drop point最近的depot
@@ -32,4 +32,4 @@ def find_closest_depot(drop_points: List[DropPoint], depots: List[DePot], thereh
                 if distance < min_distance:
                     min_distance = distance
                     drop_point.depot = depot
-            print(f"Drop point {drop_point.id} is closest to depot {drop_point.depot.id}.")
+            #print(f"Drop point {drop_point.id} is closest to depot {drop_point.depot.id}.")

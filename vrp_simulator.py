@@ -9,16 +9,15 @@ from orders_processing import generate_orders, sort_orders_by_window_end, check_
 
 #simulate the whole process
 def simulator(k:int)-> float:
-    num_drop_points = 40
-    num_depots = 5
+    num_drop_points = 40 # number of drop points
+    num_depots = 5 # number of depots
     vehicle_speed = 1  # 1 unit distance per minute
-    max_distance = 5
-    depot = (0, 0)
+    max_distance = 5 # max distance of the map a circle with radius 5
     
-    time_interval = 12  # minutes
-    time_sensitivity = 1 # minutes
-    simulation_duration = 8 * 60  # 8 hours
-    max_orders = 5  # Max orders generated per interval per drop point
+    time_interval = 12  # interval of generating orders
+    time_sensitivity = 1 # minute unit in the simulation
+    simulation_duration = 8 * 60  # simulation duration in minutes
+    max_orders = 5  # Max orders generated per generating interval per drop point
 
     #generate drop points which distances from depot limited to max_distance randomly
     drop_points = initialize_drop_points(num_drop_points,max_distance)
@@ -51,11 +50,12 @@ def simulator(k:int)-> float:
             due_orders = check_orders_due(orders_to_be_delivered, vehicle_speed=vehicle_speed, dealing_window=dealing_window)
 
             if not due_orders:
-                print("No orders due in the current dealing window.")
+                None
+                # print("No orders due in the current dealing window.")
             else:
                 due_orders_by_depots = classify_orders_by_depot(due_orders)
                 for depot_id, due_orders_by_depot in due_orders_by_depots.items():
-                    print(f'dealing the orders starting from depot {depot_id}...')
+                    # print(f'dealing the orders starting from depot {depot_id}...')
                     depot = depots[depot_id-1]
                     depot = [depot.x, depot.y]
                     #initialize the vehicle plan for the orders that are due in the current dealing window, orders's destination are the same can be delivered by the same vehicle
@@ -70,28 +70,26 @@ def simulator(k:int)-> float:
                         #     print("error: the aggregated vehicle's route is not valid")
                         #     sys.exit(1)
                         
-                        print(f"real mileage of vehicle {aggregated_vehicle.vehicle_id}: {aggregated_vehicle.real_mileage}")
-                        #using the GA to find the shortest path for the vehicle to deliver the orders
-                        print(f"searching for the shortest path for vehicle {aggregated_vehicle.vehicle_id}")
+                        # print(f"real mileage of vehicle {aggregated_vehicle.vehicle_id}: {aggregated_vehicle.real_mileage}")
+                        # #using the GA to find the shortest path for the vehicle to deliver the orders
+                        # print(f"searching for the shortest path for vehicle {aggregated_vehicle.vehicle_id}")
                         aggregated_vehicle = find_shortest_path_GA(aggregated_vehicle, depot, current_time= current_time)
 
 
                     #print the aggregated vehicles' orders and routes
-                    for aggregated_vehicle in aggregated_vehicles:
-                        print(f"Aggregated vehicle {aggregated_vehicle.vehicle_id} has orders:")
-                        for order in aggregated_vehicle.orders:
-                            print(f"Order ID: {order.order_id}, destination.id: {order.destination.id}, Demand: {order.demand}, Time Window: {order.time_window}, Priority: {order.priority}")
-                        print(f"Aggregated vehicle {aggregated_vehicle.vehicle_id} has route:")
-                        for drop_point in aggregated_vehicle.route:
-                            print(f"Drop point ID: {drop_point.id}")
+                    # for aggregated_vehicle in aggregated_vehicles:
+                    #     print(f"Aggregated vehicle {aggregated_vehicle.vehicle_id} has orders:")
+                    #     for order in aggregated_vehicle.orders:
+                    #         print(f"Order ID: {order.order_id}, destination.id: {order.destination.id}, Demand: {order.demand}, Time Window: {order.time_window}, Priority: {order.priority}")
+                    #     print(f"Aggregated vehicle {aggregated_vehicle.vehicle_id} has route:")
+                    #     for drop_point in aggregated_vehicle.route:
+                    #         print(f"Drop point ID: {drop_point.id}")
 
                     all_vehicles.extend(aggregated_vehicles)
 
                     #remove the orders that are due from the orders_to_be_delivered list
                     orders_to_be_delivered = remove_due_orders(orders_to_be_delivered, due_orders_by_depot)
-                    print(len(orders_to_be_delivered))
             
-
         current_time += time_sensitivity
     
     #write all the vehicles' orders and routes to a json file
@@ -122,6 +120,5 @@ def simulator(k:int)-> float:
     
     print(f"Whole vehicles' distance: {whole_vehicle_distance}")
     return whole_vehicle_distance
-    print(f"Error count: {error_count}")
 
 

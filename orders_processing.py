@@ -49,10 +49,10 @@ def check_orders_due(orders: List[Order], vehicle_speed: int, dealing_window:Tup
     if len(due_orders) == 0:
         return None
     else:
-        print(len(due_orders))
-        for due_order in due_orders:
-            print(f"Due orders at drop point {due_order.destination.id}:")
-            print(f"Order ID: {due_order.order_id}, destination.id: {due_order.destination.id},depot_id:{due_order.destination.depot.id} Demand: {due_order.demand}, Time Window: {due_order.time_window}, Priority: {due_order.priority}")
+        # print(len(due_orders))
+        # for due_order in due_orders:
+        #     print(f"Due orders at drop point {due_order.destination.id}:")
+        #     print(f"Order ID: {due_order.order_id}, destination.id: {due_order.destination.id},depot_id:{due_order.destination.depot.id} Demand: {due_order.demand}, Time Window: {due_order.time_window}, Priority: {due_order.priority}")
         return due_orders
 
 # remove the orders that are due from the orders_to_be_delivered list
@@ -68,7 +68,7 @@ def initial_orders_to_vehicle(orders:List[Order], vehicle_id: int) -> List[Vehic
 
     # calculate the number of vehicles needed to deliver the orders
     num_vehicles_needed = math.ceil(sum([order.demand for order in orders]) / vehicle_capacity)
-    print(f"")
+    
     for i in range(num_vehicles_needed):
         allocated_vehicles = initialize_vehicles(num_vehicles_needed, vehicle_capacity, 1)
     
@@ -121,7 +121,7 @@ def vehicles_aggregate(vehicles: List[Vehicle], depot: Tuple[float, float],curre
         aggregatation_flag = False
         for i in range(len(vehicles)):
             for j in range(i+1, len(vehicles)):
-                print(f"aggregate vehicle {vehicles[i].vehicle_id} and vehicle {vehicles[j].vehicle_id}")
+                # print(f"aggregate vehicle {vehicles[i].vehicle_id} and vehicle {vehicles[j].vehicle_id}")
                 if check_aggregate_capacity(vehicles[i], vehicles[j]) and check_aggregate_time(vehicles[i], vehicles[j], depot, current_time):
                     vehicles[i].orders.extend(vehicles[j].orders)
                     vehicles[i].load += vehicles[j].load
@@ -153,10 +153,10 @@ def check_aggregate_time(vehicle1: Vehicle, vehicle2: Vehicle, depot: Tuple[floa
     orders.extend(vehicle1.orders)
     orders.extend(vehicle2.orders)
     if check_path(orders, depot, vehicle1,start_time, route=None):
-        print("The aggregated vehicle can deliver the orders in time.")
+        #print("The aggregated vehicle can deliver the orders in time.")
         return True
     else:
-        print("The aggregated vehicle cannot deliver the orders in time.")
+        #print("The aggregated vehicle cannot deliver the orders in time.")
         return False
 
 
@@ -222,7 +222,7 @@ def check_path(vehicle_orders: List[Order], depot: Tuple[float, float], vehicle:
         vehicle.route = vehicle_route
         return True
     else:
-        print("out of the max mileage")
+        #print("out of the max mileage")
         return False
 
 def calculate_path_mileage(vehicle_path:List[DropPoint], depot: Tuple[float, float]) -> float:

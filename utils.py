@@ -13,7 +13,6 @@ class Vehicle:
         self.real_mileage = 0
         self.max_mileage = 20
         
-
 class DropPoint:
     def __init__(self, x: float, y: float,id:int):
         self.x = x
