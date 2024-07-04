@@ -216,7 +216,7 @@ def find_closest_depot(drop_points: List[DropPoint], depots: List[DePot], thereh
    $$
    dist（path_i）+ dist(path_j) > dist(path_{i + j})
    $$
-   <img src="C:\Users\10715\Desktop\Advanced_Algorithm_VRP\images\proof.drawio.svg" alt="proof.drawio" style="zoom:150%;" />
+   <img src="https://github.com/hi-underworld/Advanced_Algorithm_VRP/blob/main/images/proof.drawio.svg" alt="proof.drawio" style="zoom:150%;" />
 
    因此，可以得出结论，在满足约束条件的情况下，不断地合并无人机的订单，一定可以降低一个订单处理时间间隔内无人机的总的运输里程。
 
