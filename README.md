@@ -1,10 +1,5 @@
 # Advanced_Algorithm_VRP(高级算法大作业-无人机配送路径规划问题)
 
-本次作业的文档及代码均已开源至Github，链接：[hi-underworld/Advanced_Algorithm_VRP (github.com)](https://github.com/hi-underworld/Advanced_Algorithm_VRP)。截至6月29日的clone及visit情况如下：
-
-![image-20240629122845391](C:\Users\10715\AppData\Roaming\Typora\typora-user-images\image-20240629122845391.png)
-
-[TOC]
 
 ## 1、问题描述
 
@@ -100,7 +95,7 @@
 
 1. **初始化**：随机生成的m个卸货点和n个配送中心，即卸货点列表（`drop_points`）和配送中心列表（`depots`），并设置一个阈值（`therehold`）。 根据题目中给出的约束，所有配送中心均能满足所有卸货点的订单，且无人机的运输距离约束为`max_distance = 20`，因此，所有卸货点和所有配送中心的距离`distance`满足约束`distance <= 10`。因此可以考虑以下卸货点和配送中心的随机生成模型。生成一个半径`radius=5`的圆，生成n个配送中心，它们随机分布在这个圆上；在这个圆内随机生成m个卸货点。如下所示：
 
-   ![initial_map.drawio](C:\Users\10715\Desktop\Advanced_Algorithm_VRP\images\initial_map.drawio.svg)
+   ![initial_map.drawio](https://github.com/hi-underworld/Advanced_Algorithm_VRP/blob/main/images/initial_map.drawio.svg)
 
    依据这个规则生成的配送中心和卸货点的分布图，每个配送中心均能满足所有卸货点的订单需求，即`distance [depot_i , drop_point_j]<=10`恒成立。而且这种配送模式也符合当前许多物流公司的配送中心设立，即将大的配送中心分布在城市的周围，在城市中心在设置卸货点。
 
