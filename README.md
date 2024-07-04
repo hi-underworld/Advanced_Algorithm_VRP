@@ -522,7 +522,7 @@ m值的取值范围设定在[1,10]之间，每组实验固定m值并进行20次�
 
 执行main.py文件即可开始模拟实验，模拟实验的结果如下：
 
-<img src="C:\Users\10715\AppData\Roaming\Typora\typora-user-images\image-20240626154019137.png" alt="image-20240626154019137" style="zoom:67%;" />
+<img src="https://github.com/hi-underworld/Advanced_Algorithm_VRP/blob/main/images/image-20240626154019137.png" alt="image-20240626154019137" style="zoom:67%;" />
 
 可以当前设置的参数情况下，设置`dealing_window = 2 * t`，总的无人机的里程最小。当然，也可以调整其他参数进行模拟。
 
