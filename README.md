@@ -181,7 +181,7 @@ def find_closest_depot(drop_points: List[DropPoint], depots: List[DePot], thereh
 
 1. **统计最小订单处理时间间隔内应处理的订单**：对于当前待处理的所有订单，计算从其对应的配送中心（`depot`）直接到订单目的地（`drop_point`）的运输时间。 如果订单的截止时间减去运输时间（即订单最晚开始处理时间）首次小于当前处理窗口的结束时间，则认为订单应当在当前订单处理窗口处理。统计所有应当在当前订单处理时间窗口的订单`due_orders`。以下是一个统计订单的例子，
 
-   ![due_order.drawio](C:\Users\10715\Desktop\Advanced_Algorithm_VRP\images\due_order.drawio.svg)
+   ![due_order.drawio](https://github.com/hi-underworld/Advanced_Algorithm_VRP/blob/main/images/due_order.drawio.svg)
 
    显然，m值设置有范围，最小显然为1，最大即当前时间`current time = k * t`生成的订单全部都在当前订单处理时间窗`[k * t ,  k * t + dealing_window ]`处理，订单的优先级为30min，60min，180min内完成，因此，`m * t <= 180 - max transport time`,即 `m  <= （180 - max transport time） / t`。因为`distance [depot_i , drop_point_j]<=10`,所以`max transport time <= 10`。
 
@@ -191,7 +191,7 @@ def find_closest_depot(drop_points: List[DropPoint], depots: List[DePot], thereh
 
 2. **订单分配初始化**：在统计完当前处理订单的最小时间间隔内的订单`due_orders`后，初始化一个订单配送的方案：将所有`drop_point`即卸货点相同的订单`due_orders_drop_point_i`用`num_vehicles_needed`台无人机运送，`num_vehicles_needed`等于`due_orders_drop_point_i`的重量除以一台无人机的承重`capacity`的值向上取整。最终总是会有小于等于k台无人机没有满载，k为这批订单中不同的卸货点的数量。以下是一个订单分配初始化的一个例子：
 
-   <img src="C:\Users\10715\Desktop\Advanced_Algorithm_VRP\images\initial_plan.drawio.svg" alt="initial_plan.drawio" style="zoom: 70%;" />
+   <img src="https://github.com/hi-underworld/Advanced_Algorithm_VRP/blob/main/images/initial_plan.drawio.svg" alt="initial_plan.drawio" style="zoom: 70%;" />
 
    由于步骤1中统计最小订单处理时间间隔内应处理的订单的规则，这样分配的订单一定能够在订单的截止时间前完成。即这种订单分配策略一定合法。
 
