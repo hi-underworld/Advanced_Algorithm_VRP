@@ -103,7 +103,7 @@
 
 3. **分配最接近的配送中心**： 如果以`drop_point_i`为圆心，阈值为半径的范围内有卸货点分配了对应的配送中心，则选择数量最多的配送中心分配给当前卸货点`drop_point_i`。如果没有，则选择距离当前卸货点最近的配送中心。下面是一个例子，表示如何为卸货点分配配送中心。灰色的点表示`drop_point_i`，阈值为半径的范围内有5个卸货点，相同的颜色表示被分配到同一个配送中心，不同颜色表示被分配到不同的配送中心。因为4个点有2个红色即两个卸货点被分配到了配送中心`depot_j`，数量是最多的，因此，将`drop_point_i`分配到`depot_j`。
 
-<img src="C:\Users\10715\Desktop\Advanced_Algorithm_VRP\images\knn.png" alt="knn" style="zoom:67%;" />
+<img src="https://github.com/hi-underworld/Advanced_Algorithm_VRP/blob/main/images/knn.png" alt="knn" style="zoom:67%;" />
 
 
 
